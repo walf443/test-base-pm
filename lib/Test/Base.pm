@@ -347,6 +347,7 @@ sub run_like() {
     (my ($self), @_) = find_my_self(@_);
     $self->_assert_plan;
     my ($x, $y) = $self->_section_names(@_);
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     for my $block (@{$self->block_list}) {
         next unless exists($block->{$x}) and defined($y);
         $block->run_filters unless $block->is_filtered;
@@ -361,6 +362,7 @@ sub run_unlike() {
     (my ($self), @_) = find_my_self(@_);
     $self->_assert_plan;
     my ($x, $y) = $self->_section_names(@_);
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     for my $block (@{$self->block_list}) {
         next unless exists($block->{$x}) and defined($y);
         $block->run_filters unless $block->is_filtered;
