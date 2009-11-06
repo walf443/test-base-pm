@@ -383,6 +383,7 @@ sub skip_all_unless_require() {
 sub is_deep() {
     (my ($self), @_) = find_my_self(@_);
     require Test::Deep;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     Test::Deep::cmp_deeply(@_);
 }
 
@@ -390,6 +391,7 @@ sub run_is_deep() {
     (my ($self), @_) = find_my_self(@_);
     $self->_assert_plan;
     my ($x, $y) = $self->_section_names(@_);
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     for my $block (@{$self->block_list}) {
         next unless exists($block->{$x}) and exists($block->{$y});
         $block->run_filters unless $block->is_filtered;
